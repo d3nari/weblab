@@ -15,8 +15,8 @@ BEGIN
       IF Test = 'name='
       THEN 
         BEGIN
-          I := POS('=', Query) + 1
-          Name := Copy(Query, 6, Length(Query) - I);
+          I := Length(Query) - POS('=', Query) 
+          Name := Copy(Query, 6, I);
           IF Length(Name) > 0
           THEN
             WRITELN('Hello Dear, ', Name, '!')
