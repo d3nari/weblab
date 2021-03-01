@@ -1,22 +1,28 @@
-PROGRAM SGIScript(INPUT, OUTPUT);
-USES
-  DOS;
+PROGRAM HelloFriend(INPUT, OUTPUT);
+USES DOS;
 VAR
-  Name, Query: STRING;
+  Query, Name, Test: STRING;
   I: INTEGER;
-BEGIN {SGIScript}
-  WRITELN('Content-Type: text/plain');
+BEGIN
+  WRITELN('Content-Type: text/html');
   WRITELN;
   Query := GetEnv('QUERY_STRING');
 
-  IF (Length(Query) > 0)  //îïðåäåëèòü, åñòü ëè ÷òî-òî â QUERY_STRING
+  IF (Length(Query) > 0)
   THEN
     BEGIN
-      FOR I := POS('=', Query) + 1 TO Length(Query)
-      DO
-        Name := Concat(Name, Query[I]);
-      WRITELN('Hello dear,', Name)
+      Test := Copy(Query, 1, 5);
+      IF Test = 'name='
+      THEN 
+        BEGIN
+          I := POS('=', Query) + 1
+          Name := Copy(Query, 6, Length(Query) - I);
+          IF Length(Name) > 0
+          THEN
+            WRITELN('Hello Dear, ', Name, '!')
+        END
+      ELSE
+        WRITELN('Hello Anonymous!')
     END
-  ELSE
-    WRITELN('Hello Ñû÷')
-END. {SGIScript}
+
+END.
