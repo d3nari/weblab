@@ -1,24 +1,33 @@
 PROGRAM SarahRevere(INPUT, OUTPUT);
 USES DOS;
 VAR
-  Query: STRING;
+  Query, Test: STRING;
   Lanterns: CHAR;
-  I: INTEGER;
+  I, X: INTEGER;
 BEGIN {PaulRevere}
   WRITELN('Content-Type: text/plain');
   WRITELN;
   Query := GetEnv('QUERY_STRING');
   Lanterns := '-';
-
+  
   IF (Length(Query) > 0)  //îïðåäåëèòü, åñòü ëè ÷òî-òî â QUERY_STRING
   THEN
-    BEGIN
-      I := POS('=', Query) + 1; //èùåì ñèìâîë ïîñëå çíàêà '=' è çàïèñûâàåì â I
-      IF I > 1
-      THEN
-        Lanterns := Query[I];
-    END;
-
+  BEGIN
+    I := POS('=', Query);
+    FOR X := 1 TO I
+    DO
+      Test := Concat(Test, Query[X]);
+    
+    IF Test = 'lanterns' 
+    THEN
+      BEGIN
+        I := POS('=', Query) + 1; //èùåì ñèìâîë ïîñëå çíàêà '=' è çàïèñûâàåì â I
+        IF I > 1
+        THEN
+          Lanterns := Query[I];
+      END
+   END;
+     
   IF (Lanterns > '0') AND (Lanterns < '3')
   THEN
     WRITE('The British are coming by ');
