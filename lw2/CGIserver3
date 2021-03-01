@@ -26,5 +26,6 @@ BEGIN
       ELSE
         WRITELN('Hello Anonymous!')
     END
-
+  ELSE
+    WRITELN('Hello Anonymous!')
 END.
