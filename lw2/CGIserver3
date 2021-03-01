@@ -20,6 +20,8 @@ BEGIN
           IF Length(Name) > 0
           THEN
             WRITELN('Hello Dear, ', Name, '!')
+          ELSE
+            WRITELN('Hello Anonymous!')  
         END
       ELSE
         WRITELN('Hello Anonymous!')
