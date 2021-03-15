@@ -43,6 +43,6 @@
   if($digit == $length)
     $security -= $length;
   $security -= $countRepeatSymbol;
-  echo("Security " .$security);       
+  echo("Security " . $security);       
 
 ?>
