@@ -4,44 +4,45 @@
   $text = $_GET["text"];
 
   preg_match("/^[a-zA-Z][a-zA-Z0-9]+/", $text, $matches); //проверка на допустимые символы
-  $length = strlen($matches[0]) //вычисляем длину строки matches  
-  $differnt = strln($text) - $length;  //разность длины входной строки и длины строки matches
+  $length = strlen($matches[0]); //вычисляем длину строки matches  
+  $different = strlen($text) - $length;  //разность длины входной строки и длины строки matches
   if($different > 0)  //если строки не совпадают по длине, то ошибка
-    exit("Eror - char in " .$length. "position not english bet or digit");
+    exit("Eror - char in " . $length . "position not english bet or digit");
   
-  $all_symbol = array();  
+  $allSymbol = array();  
   //$repeat_symbol = array();  
-  $security = 0; $digits = 0; $uppercase = 0; $lowercase = 0; $bets = 0; $count_repeat_symbol = 0;
+  $security = 0; $digits = 0; $uppercase = 0; $lowercase = 0; $bets = 0; $countRepeatSymbol = 0;
 
   for($n = 0; $n < $length; $n++)
   {
     $char = $text[$n];
-    if ('0' <= $char) and ('9' >= $char)
+    if (ctype_digit($char)) //символ - цифра
       $digit++;
-    else
+    else //символ - буква
     {
       $bets++;
       if(ctype_upper($char))
         $uppercase++;
-      if(ctype_lower($char))
-        $lowercase++;  
+      else
+        $lowercase++;   
     }
-    if(in_arry($char, $all_symbol))
-      $count_repeat_symbol += 2;
+    //проверка на повторяющийся символ
+    if(in_array($char, $allSymbol))
+      $countRepeatSymbol += 2;
     else
-      $all_symbol[] = $char;
+      $allSymbol[] = $char;
     
   }      
 
-  $security += 4*$length;
-  $security += 4*$digit;
-  $security += 2*($length - $uppercase); 
-  $security += 2*($length - $lowercase);
+  $security += 4 * $length;
+  $security += 4 * $digit;
+  $security += 2 * ($length - $uppercase); 
+  $security += 2 * ($length - $lowercase);
   if($bets == $length)
     $security -= $length;
   if($digit == $length)
     $security -= $length;
-  $security -= $repeat_symbol;
+  $security -= $countRepeatSymbol;
   echo("Security " .$security);       
 
 ?>
